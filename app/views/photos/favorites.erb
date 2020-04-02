@@ -1,0 +1,15 @@
+<div class="search">
+    <h1>Favorite Photos</h1>
+    
+</div>
+
+<div class="gallery">
+    <% @photos.each do |item| %>
+
+        <div>
+            <img src="<%= item["url"] %>" loading="lazy" />
+        </div>
+
+    <% end %>
+
+</div>

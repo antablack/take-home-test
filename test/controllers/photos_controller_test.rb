@@ -15,7 +15,7 @@ class PhotosControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should save get_favorite_photos" do
-    get "/api/favorite-photos"
+    get "/favorite-photos"
     assert_response :success
   end
 

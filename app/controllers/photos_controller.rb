@@ -9,12 +9,15 @@ class PhotosController < ApplicationController
     favorite_photos.url = url
     if !favorite_photos.valid? then 
       render status: 400, json: {:error => "There are missing fields"}.to_json
+      return
     end
     favorite_photos.save
+    render status: 200, json: {:success => "Favorite photo added"}.to_json
   end
 
   def get_favorite_photos
-    render json: FavoritePhoto.all, status: 200
+    @photos = FavoritePhoto.all
+    render "photos/favorites"
   end
 
   def photos
