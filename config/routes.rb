@@ -1,3 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  get  '/', controller: :photos, action: :photos
+
+  scope '/api' do
+      post  '/favorite-photos', controller: :photos, action: :favorite_photos
+      get  '/favorite-photos', controller: :photos, action: :get_favorite_photos
+  end
+
+
 end
