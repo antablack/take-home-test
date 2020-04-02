@@ -1,4 +1,6 @@
 class PhotosController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def favorite_photos
     photo_id = params["photoId"]
     url = params["url"]
@@ -16,6 +18,13 @@ class PhotosController < ApplicationController
   end
 
   def photos
+    @photos = Unsplash::Photo.random(count: 100)
+    render "photos/photos"
+  end
+
+  def search_photos
+    str = params["q"]
+    @photos = Unsplash::Photo.search(str)
     render "photos/photos"
   end
 

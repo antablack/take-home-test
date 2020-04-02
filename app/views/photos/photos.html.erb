@@ -1,28 +1,50 @@
 <div class="search">
     <h1>Take Home Test</h1>
-    <form method="POST">
-        <input placeholder="Ex: Dog, wallpaper..." type="text">
+    <form method="GET" action="/search">
+        <input placeholder="Ex: Dog, wallpaper..." type="text" name="q">
         <button type="submit">Search</button>
     </form>
     <button class="button">Favorite Photos</button>
 </div>
 
 <div class="gallery">
+    <% @photos.each do |item| %>
+
     <div>
-        <img src="https://www.rd.com/wp-content/uploads/2019/04/shutterstock_1013848126-760x506.jpg" />
-        <button class="button">Add to Favorites</button>
-    </div>
-    <div>
-        <img src="https://www.rd.com/wp-content/uploads/2019/04/shutterstock_1013848126-760x506.jpg" />
-        <button class="button">Add to Favorites</button>
-    </div>
-    <div>
-        <img src="https://www.rd.com/wp-content/uploads/2019/04/shutterstock_1013848126-760x506.jpg" />
-        <button class="button">Add to Favorites</button>
-    </div>
-    <div>
-        <img src="https://www.rd.com/wp-content/uploads/2019/04/shutterstock_1013848126-760x506.jpg" />
-        <button class="button">Add to Favorites</button>
+        <img src="<%= item["urls"]["thumb"] %>" alt="<%= item["alt_description"]%>" loading="lazy" />
+        <button data-id="<%= item["id"] %>" data-src="<%= item["urls"]["thumb"]%>" class="button">Add to
+            Favorites</button>
     </div>
 
+    <% end %>
+
 </div>
+
+<script>
+    window.onload = function () {
+
+        document.querySelectorAll(".gallery .button").forEach((element) => {
+            element.onclick = event => addToFavorite(event.target.dataset.id, event.target.dataset.src)
+        })
+
+        async function addToFavorite(id, url) {
+            console.log(id + " " + url)
+            const data = {photoId: id, url: url}
+            const response = await fetch("/api/favorite-photos", {
+                method: 'POST', 
+                mode: 'cors', 
+                cache: 'no-cache', 
+                credentials: 'same-origin', 
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', 
+                referrerPolicy: 'no-referrer', 
+                body: JSON.stringify(data) 
+            });
+            const result = await response.json();
+            console.log(result)
+        }
+    }
+</script>

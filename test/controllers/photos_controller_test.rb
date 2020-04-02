@@ -19,4 +19,20 @@ class PhotosControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  #test "should not load search" do
+  #  get "/search"
+  #  assert_response 500
+  #end
+
+  test "should load search" do
+    get "/search",
+        params: {q: ""}
+    assert_response :success
+  end
+
+  test "should  load photos" do
+    get "/"
+    assert_response :success
+  end
+
 end
