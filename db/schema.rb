@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_04_01_225853) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "favorite_photos", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
